@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import "./styles/index.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import Home from "./pages";
 import DetailMovie from "./pages/detailMovie";
 import FavoriteMovie from "./pages/favoriteMovie";
