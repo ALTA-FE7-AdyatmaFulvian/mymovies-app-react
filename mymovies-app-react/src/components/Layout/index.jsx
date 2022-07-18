@@ -6,7 +6,7 @@ export const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      <main className="h-full w-full bg-white dark:bg-black text-black dark:text-white px-12 py-4">
+      <main className="h-full w-full bg-white dark:bg-black text-black dark:text-white">
         {children}
       </main>
       <Footer />

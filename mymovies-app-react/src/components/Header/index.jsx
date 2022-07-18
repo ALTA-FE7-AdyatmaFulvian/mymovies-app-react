@@ -3,8 +3,8 @@ import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import MvlixIcon from "../../assets/MvlixIcon.png";
 
 const navigation = [
-  { name: "Home", href: "#", current: true },
-  { name: "Favorite", href: "#", current: false },
+  { name: "Home", href: "/", current: true },
+  { name: "Favorite", href: "/favorite", current: false },
 ];
 
 function classNames(...classes) {

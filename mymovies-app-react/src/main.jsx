@@ -4,12 +4,10 @@ import { ChakraProvider } from "@chakra-ui/react";
 import "./styles/index.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Home from "./pages";
-import DetailMovie from "./pages/detailMovie";
-import FavoriteMovie from "./pages/favoriteMovie";
+import AppRouter from "./routes";
 
 ReactDOM.createRoot(document.getElementById("content")).render(
   <ChakraProvider>
-    <Home />
+    <AppRouter />
   </ChakraProvider>
 );

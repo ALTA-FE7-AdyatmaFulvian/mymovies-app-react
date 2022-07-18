@@ -1,88 +1,81 @@
-import React, { Component } from "react";
+import { useEffect, useState } from "react";
 import Card from "../Card/index";
 import axios from "axios";
 import Slider from "react-slick";
 
-export class Discover extends Component {
-  state = {
-    discoverList: [],
-    loading: false,
-  };
+export default function Discover() {
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  async componentDidMount() {
-    await this.fetchData();
-  }
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  async fetchData() {
-    this.setState({ loading: true });
-    await axios
-      .get(
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
         `https://api.themoviedb.org/3/discover/movie?api_key=${
           import.meta.env.VITE_API_KEY
         }&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
-      )
-      .then((response) => {
-        const { results } = response.data;
-        if (results) {
-          this.setState({ discoverList: results });
-        }
-      })
-      .catch((error) => {
-        alert(error.toString());
-      })
-      .finally(() => {
-        this.setState({ loading: false });
-      });
-  }
-  render() {
-    const settings = {
-      dots: false,
-      infinite: true,
-      autoplay: true,
-      speed: 2000,
-      autoplaySpeed: 5000,
-      cssEase: "linear",
-      slidesToShow: 5,
-      slidesToScroll: 5,
-      initialSlide: 0,
-      responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3,
-          },
+      );
+      const { results } = response.data;
+      if (results) {
+        setMovies(results);
+      }
+    } catch (error) {
+      alert(error.toString());
+    }
+  };
+  const settings = {
+    dots: false,
+    infinite: true,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 5000,
+    cssEase: "linear",
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
         },
-        {
-          breakpoint: 600,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2,
-            initialSlide: 2,
-          },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
         },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-          },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
         },
-      ],
-    };
-    return (
-      <>
-        <h1 className="text-3xl font-semibold text-center">Discover</h1>
-        <div className="py-4">
-          <Slider {...settings}>
-            {this.state.discoverList.map((data) => (
-              <Card key={data.id} title={data.title} image={data.poster_path} />
-            ))}
-          </Slider>
-        </div>
-      </>
-    );
-  }
+      },
+    ],
+  };
+  return (
+    <div className="p-12">
+      <h1 className="text-3xl font-semibold text-center">Discover</h1>
+      <div className="py-4">
+        <Slider {...settings}>
+          {movies.map((movie) => (
+            <Card
+              key={movie.id}
+              id={movie.id}
+              title={movie.title}
+              image={movie.poster_path}
+            />
+          ))}
+        </Slider>
+      </div>
+    </div>
+  );
 }
-
-export default Discover;

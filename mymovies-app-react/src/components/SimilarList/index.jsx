@@ -3,9 +3,9 @@ import Card from "../Card/index";
 import axios from "axios";
 import Slider from "react-slick";
 
-export default function Trending() {
-  const [movies, setMovies] = useState([]);
+export default function Similar({ movieId }) {
   const [loading, setLoading] = useState(false);
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -14,9 +14,9 @@ export default function Trending() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://api.themoviedb.org/3/trending/movie/day?api_key=${
+        `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${
           import.meta.env.VITE_API_KEY
-        }`
+        }&language=en-US&page=1`
       );
       const { results } = response.data;
       if (results) {
@@ -26,6 +26,7 @@ export default function Trending() {
       alert(error.toString());
     }
   };
+
   const settings = {
     dots: false,
     infinite: true,
@@ -63,7 +64,7 @@ export default function Trending() {
   };
   return (
     <div className="p-12">
-      <h1 className="text-3xl font-semibold text-center">Trending</h1>
+      <h1 className="text-3xl font-semibold text-center">Similar</h1>
       <div className="py-4">
         <Slider {...settings}>
           {movies.map((movie) => (
