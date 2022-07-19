@@ -7,7 +7,7 @@ export default function FavoriteMovie() {
   const favMovies = useSelector((state) => state.favorites);
   return (
     <Layout>
-      <div className="py-4 flex min-h-screen">
+      <div className="py-4 min-h-screen grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 md:gap-4">
         {favMovies.map((movie) => (
           <Card
             key={movie.id}

@@ -52,10 +52,15 @@ export default function DetailMovie() {
     const getMovies = localStorage.getItem("favMovies");
     if (getMovies) {
       const parsedMovies = JSON.parse(getMovies);
-      parsedMovies.push(movie);
-      localStorage.setItem("favMovies", JSON.stringify(parsedMovies));
-      dispatch(reduxAction("ADD_FAVORITE", parsedMovies));
-      alert("success");
+      const item = parsedMovies.find((value) => value.id === movie.id);
+      if (!item) {
+        parsedMovies.push(movie);
+        localStorage.setItem("favMovies", JSON.stringify(parsedMovies));
+        dispatch(reduxAction("ADD_FAVORITE", parsedMovies));
+        alert("Added to Favorite");
+      } else {
+        alert("Already Favorite");
+      }
     } else {
       localStorage.setItem("favMovies", JSON.stringify([movie]));
       dispatch(reduxAction("ADD_FAVORITE", [movie]));

@@ -1,25 +1,31 @@
+import { useLocation } from "react-router-dom";
+
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 
 import MvlixIcon from "../../assets/MvlixIcon.png";
 import { HiMoon, HiSun } from "react-icons/hi";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ThemeContext } from "../../utils/context";
-
-const navigation = [
-  { name: "Home", href: "/", current: true },
-  { name: "Favorite", href: "/favorite", current: false },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Header() {
+  const { pathname } = useLocation();
   const { theme, setTheme } = useContext(ThemeContext);
   const handleChangeTheme = (mode) => {
     setTheme(mode);
   };
+
+  const navigation = [
+    { name: "Home", href: "/", current: false },
+    { name: "Favorite", href: "/favorite", current: false },
+  ];
+  const isActive = navigation.find((value) => value.href === pathname);
+  if (isActive) isActive.current = true;
+
   return (
     <header>
       <Disclosure as="nav" className="bg-white dark:bg-[#031c27]">
@@ -60,8 +66,8 @@ export default function Header() {
                           href={item.href}
                           className={classNames(
                             item.current
-                              ? "bg-[#31454d] text-[#0096D7] font-bold"
-                              : "text-black dark:text-white hover:bg-[#31454d] font-bold",
+                              ? "text-[#0096D7] font-bold hover:underline hover:underline-offset-4"
+                              : "text-black dark:text-white font-bold hover:underline hover:underline-offset-4",
                             "px-3 py-2 rounded-md text-sm font-medium"
                           )}
                           aria-current={item.current ? "page" : undefined}
@@ -101,8 +107,8 @@ export default function Header() {
                     href={item.href}
                     className={classNames(
                       item.current
-                        ? "bg-[#31454d] text-[#0096D7] font-bold"
-                        : "text-black dark:text-white hover:bg-[#31454d] font-bold",
+                        ? "text-[#0096D7] font-bold"
+                        : "text-black dark:text-white font-bold",
                       "block px-3 py-2 rounded-md text-base font-medium"
                     )}
                     aria-current={item.current ? "page" : undefined}
