@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+import { MdStarOutline } from "react-icons/md";
+
 export default function Card({ id, title, image }) {
   return (
     <Link to={`/detail/${id}`} reloadDocument>
@@ -13,7 +15,7 @@ export default function Card({ id, title, image }) {
           alt={title}
           className="rounded-xl h-80 w-auto my-1"
         />
-        <p className="mx-0 my-auto text-left text-white font-bold">{title}</p>
+        <p className="mx-0 my-auto text-left font-bold">{title}</p>
       </div>
     </Link>
   );

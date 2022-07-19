@@ -1,6 +1,10 @@
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
+
 import MvlixIcon from "../../assets/MvlixIcon.png";
+import { HiMoon, HiSun } from "react-icons/hi";
+import { useContext } from "react";
+import { ThemeContext } from "../../utils/context";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
@@ -12,6 +16,10 @@ function classNames(...classes) {
 }
 
 export default function Header() {
+  const { theme, setTheme } = useContext(ThemeContext);
+  const handleChangeTheme = (mode) => {
+    setTheme(mode);
+  };
   return (
     <header>
       <Disclosure as="nav" className="bg-white dark:bg-[#031c27]">
@@ -53,7 +61,7 @@ export default function Header() {
                           className={classNames(
                             item.current
                               ? "bg-[#31454d] text-[#0096D7] font-bold"
-                              : "text-white hover:bg-[#31454d] hover:text-[#0096D7] font-bold",
+                              : "text-black dark:text-white hover:bg-[#31454d] font-bold",
                             "px-3 py-2 rounded-md text-sm font-medium"
                           )}
                           aria-current={item.current ? "page" : undefined}
@@ -63,6 +71,23 @@ export default function Header() {
                       ))}
                     </div>
                   </div>
+                </div>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                  <button type="button" className="p-1 rounded-full">
+                    {theme === "light" ? (
+                      <HiMoon
+                        color="dark"
+                        size={30}
+                        onClick={() => handleChangeTheme("dark")}
+                      />
+                    ) : (
+                      <HiSun
+                        color="white"
+                        size={30}
+                        onClick={() => handleChangeTheme("light")}
+                      />
+                    )}
+                  </button>
                 </div>
               </div>
             </div>
@@ -77,7 +102,7 @@ export default function Header() {
                     className={classNames(
                       item.current
                         ? "bg-[#31454d] text-[#0096D7] font-bold"
-                        : "text-white hover:bg-[#31454d] hover:text-[#0096D7] font-bold",
+                        : "text-black dark:text-white hover:bg-[#31454d] font-bold",
                       "block px-3 py-2 rounded-md text-base font-medium"
                     )}
                     aria-current={item.current ? "page" : undefined}

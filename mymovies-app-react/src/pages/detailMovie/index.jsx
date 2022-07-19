@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import { Layout } from "../../components/Layout";
+import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+
+import { Layout } from "../../components/Layout";
 import Similar from "../../components/SimilarList";
+import { reduxAction } from "../../utils/redux/actions/action";
 
 import { Button, ButtonGroup } from "@chakra-ui/react";
 import { MdArrowBackIosNew, MdStarOutline } from "react-icons/md";
@@ -16,6 +19,7 @@ const timeConvert = (num) => {
 export default function DetailMovie() {
   const { movie_id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
   const [movie, setMovie] = useState([]);
@@ -44,6 +48,19 @@ export default function DetailMovie() {
     }
   };
 
+  const handleFav = (movie) => {
+    const getMovies = localStorage.getItem("favMovies");
+    if (getMovies) {
+      const parsedMovies = JSON.parse(getMovies);
+      parsedMovies.push(movie);
+      localStorage.setItem("favMovies", JSON.stringify(parsedMovies));
+      dispatch(reduxAction("ADD_FAVORITE", parsedMovies));
+      alert("success");
+    } else {
+      localStorage.setItem("favMovies", JSON.stringify([movie]));
+      dispatch(reduxAction("ADD_FAVORITE", [movie]));
+    }
+  };
   return (
     <Layout>
       <div
@@ -96,6 +113,7 @@ export default function DetailMovie() {
                 leftIcon={<MdStarOutline />}
                 colorScheme="yellow"
                 borderRadius="500px"
+                onClick={() => handleFav(movie)}
               >
                 Add to favorite
               </Button>

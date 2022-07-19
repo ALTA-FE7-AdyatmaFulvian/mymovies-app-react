@@ -1,14 +1,22 @@
-import React, { Component } from "react";
+import { useSelector } from "react-redux";
+
 import { Layout } from "../../components/Layout";
+import Card from "../../components/Card/index";
 
-export class FavoriteMovie extends Component {
-  render() {
-    return (
-      <Layout>
-        <div>favoriteMovie</div>
-      </Layout>
-    );
-  }
+export default function FavoriteMovie() {
+  const favMovies = useSelector((state) => state.favorites);
+  return (
+    <Layout>
+      <div className="py-4 flex min-h-screen">
+        {favMovies.map((movie) => (
+          <Card
+            key={movie.id}
+            id={movie.id}
+            title={movie.title}
+            image={movie.poster_path}
+          />
+        ))}
+      </div>
+    </Layout>
+  );
 }
-
-export default FavoriteMovie;

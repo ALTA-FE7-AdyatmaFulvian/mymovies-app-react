@@ -65,7 +65,7 @@ export default function NowPlaying() {
     <div className="p-12">
       <h1 className="text-3xl font-semibold text-center">Now Playing</h1>
       <div className="py-4">
-        <Slider {...settings}>
+        <Slider {...settings} className="">
           {movies.map((movie) => (
             <Card
               key={movie.id}
